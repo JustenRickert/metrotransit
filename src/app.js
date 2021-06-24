@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 
 import { RouteSelect, DirectionsSelect, StopsSelect } from "./select";
 import { directionsAtom, routesAtom, stopsAtom, useRouter } from "./state";
+import YourNextrip from "./your-nextrip";
 
 import "./app.css";
 
@@ -63,29 +64,6 @@ function reducer(state, data) {
   return fn(data);
 }
 
-function _AppWithInitialState({ routeId, directionId, stopId }) {
-  const { routes } = useRecoilValue(routesAtom);
-  const { directions } = useRecoilValue(directionsAtom(routeId));
-  const { stops } = useRecoilValue(stopsAtom([routeId, directionId].join(".")));
-  return (
-    <App
-      initialState={{
-        route: routes[routeId],
-        direction: directions[directionId],
-        stop: stops[stopId],
-      }}
-    />
-  );
-}
-
-export function AppWithInitialState(props) {
-  return (
-    <Suspense fallback={<LoadingDots />}>
-      <_AppWithInitialState {...props} />
-    </Suspense>
-  );
-}
-
 export function App({ initialState = null }) {
   const [{ route, direction, stop }, setState] = useReducer(
     reducer,
@@ -122,6 +100,34 @@ export function App({ initialState = null }) {
           />
         )}
       </Suspense>
+      <Suspense fallback={<LoadingDots />}>
+        {route && direction && stop && (
+          <YourNextrip route={route} direction={direction} stop={stop} />
+        )}
+      </Suspense>
     </div>
+  );
+}
+
+function _AppWithInitialState({ routeId, directionId, stopId }) {
+  const { routes } = useRecoilValue(routesAtom);
+  const { directions } = useRecoilValue(directionsAtom(routeId));
+  const { stops } = useRecoilValue(stopsAtom([routeId, directionId].join(".")));
+  return (
+    <App
+      initialState={{
+        route: routes[routeId],
+        direction: directions[directionId],
+        stop: stops[stopId],
+      }}
+    />
+  );
+}
+
+export function AppWithInitialState(props) {
+  return (
+    <Suspense fallback={<LoadingDots />}>
+      <_AppWithInitialState {...props} />
+    </Suspense>
   );
 }

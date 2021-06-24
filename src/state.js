@@ -83,7 +83,7 @@ export const stopsAtom = selectorFamily({
 });
 
 // TODO
-export const yourNexTripAtom = selectorFamily({
+export const yourNextripAtom = selectorFamily({
   key: "yournextrip",
   get: (routeIdDotDirectionIdDotStopId) => () => {
     const [routeId, directionId, stopId] = routeIdDotDirectionIdDotStopId.split(
