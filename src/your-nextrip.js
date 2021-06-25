@@ -44,7 +44,7 @@ function initializeLeafletMap(mapRef, [latitude, longitude]) {
   }).addTo(mapRef.current);
 }
 
-export default function YourNextrip({ route, direction, stop }) {
+export function YourNextrip({ route, direction, stop }) {
   const map = useRef();
   const [userCoords, setUserCoords] = useState(null);
   const yourNextrip = useRecoilValue(

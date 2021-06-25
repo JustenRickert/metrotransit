@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 
 import { directionsAtom, stopsAtom, routesAtom } from "./state";
 
-export const RouteSelect = function RouteSelect({
+export const RoutesSelect = function RouteSelect({
   initialRouteId = "",
   onChange,
 }) {
@@ -13,7 +13,9 @@ export const RouteSelect = function RouteSelect({
       value={initialRouteId}
       onChange={(e) => onChange(routes[e.target.value])}
     >
-      <option value="">Select a route</option>
+      <option key="" value="">
+        Select a route
+      </option>
       {ids.map((id) => (
         <option value={id} key={id}>
           {routes[id].route_label}
@@ -35,7 +37,9 @@ export function DirectionsSelect({ initialDirectionId = "", route, onChange }) {
       ref={ref}
       onChange={(e) => onChange(directions[e.target.value])}
     >
-      <option value="">Select directions</option>
+      <option key="" value="">
+        Select directions
+      </option>
       {ids.map((id) => (
         <option value={id} key={id}>
           {directions[id].direction_name}
@@ -64,7 +68,9 @@ export function StopsSelect({
       ref={ref}
       onChange={(e) => onChange(stops[e.target.value])}
     >
-      <option value="">Select directions</option>
+      <option key="" value="">
+        Select directions
+      </option>
       {ids.map((id) => (
         <option value={id} key={id}>
           {stops[id].description}

@@ -1,9 +1,9 @@
 import React, { useEffect, Suspense, useState, useReducer } from "react";
 import { useRecoilValue } from "recoil";
 
-import { RouteSelect, DirectionsSelect, StopsSelect } from "./select";
+import { RoutesSelect, DirectionsSelect, StopsSelect } from "./select";
 import { directionsAtom, routesAtom, stopsAtom, useRouter } from "./state";
-import YourNextrip from "./your-nextrip";
+import { YourNextrip } from "./your-nextrip";
 
 import "./app.css";
 
@@ -79,7 +79,7 @@ export function App({ initialState = null }) {
   return (
     <div className="app">
       <Suspense fallback={<LoadingDots />}>
-        <RouteSelect initialRouteId={route?.route_id} onChange={setState} />
+        <RoutesSelect initialRouteId={route?.route_id} onChange={setState} />
       </Suspense>
       <Suspense fallback={<LoadingDots />}>
         {route && (
