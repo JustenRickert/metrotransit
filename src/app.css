@@ -1,3 +1,8 @@
+h1, h2 {
+    font-size: 2em;
+    font-family: arial;
+}
+
 .app {
     min-height: 100vh;
     width: 100%;
@@ -6,9 +11,33 @@
     align-items: center;
 }
 
+.app-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headline {
+    width: 100%;
+    background-image: url(https://www.metrotransit.org/img/nextrip.jpg);
+    background-position: center;
+    height: 300px;
+    position: relative;
+}
+
+.headline h1 {
+    position: absolute;
+    color: white;
+    text-shadow: 2px 2px #000000;
+    margin: 2em;
+    bottom: 0;
+}
+
 .app select {
+    font-size: 1.25em;
     margin: 5px;
-    width: 200px;
+    width: 30em;
+    height: 4em;
 }
 
 .loading-dots {

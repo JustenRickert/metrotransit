@@ -1,0 +1,52 @@
+.your-nextrip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1em;
+    background-color: whitesmoke;
+    margin: 1em;
+    min-height: 650px;
+}
+
+.your-nextrip h2 {
+}
+
+.departures {
+    width: 100%;
+    margin: 1rem;
+}
+
+.departures button {
+    margin: 0 1rem;
+}
+
+.departures table {
+    padding: 0 1rem 1rem 1rem;
+    width: 100%;
+    font-size: 1.25em;
+}
+
+.departures table thead {
+    font-family: arial;
+}
+
+.departures table tr * {
+    padding: 0.25rem;
+}
+
+.departures table .t-route {
+    text-align: left;
+}
+
+.departures table .t-destination {
+    text-align: left;
+}
+
+.departures table .t-departs {
+    text-align: right;
+}
+
+.departures tbody .t-route {
+    font-family: arial;
+    font-weight: bold;
+}

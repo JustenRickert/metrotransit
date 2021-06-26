@@ -28,6 +28,10 @@ function LoadingDots() {
   );
 }
 
+function isAction(action) {
+  return action && "type" in action;
+}
+
 function isRoute(data) {
   return data && "route_id" in data;
 }
@@ -54,14 +58,34 @@ const defaultState = {
   stop: null,
 };
 
-function reducer(state, data) {
+function reducer(state, dataOrAction) {
+  if (isAction(dataOrAction)) {
+    switch (dataOrAction.type) {
+      case "reset":
+        switch (dataOrAction.which) {
+          case "direction":
+            return {
+              ...state,
+              direction: null,
+              stop: null,
+            };
+          case "stop":
+            return {
+              ...state,
+              stop: null,
+            };
+        }
+      default:
+        throw new Error("not impl");
+    }
+  }
   const fn = cond([
     [isRoute, (route) => ({ route, direction: null, stop: null })],
     [isDirection, (direction) => ({ ...state, direction, stop: null })],
     [isStop, (stop) => ({ ...state, stop })],
     [() => true, () => defaultState],
   ]);
-  return fn(data);
+  return fn(dataOrAction);
 }
 
 export function App({ initialState = null }) {
@@ -78,33 +102,49 @@ export function App({ initialState = null }) {
 
   return (
     <div className="app">
-      <Suspense fallback={<LoadingDots />}>
-        <RoutesSelect initialRouteId={route?.route_id} onChange={setState} />
-      </Suspense>
-      <Suspense fallback={<LoadingDots />}>
-        {route && (
-          <DirectionsSelect
-            initialDirectionId={direction?.direction_id}
-            route={route}
-            onChange={setState}
-          />
-        )}
-      </Suspense>
-      <Suspense fallback={<LoadingDots />}>
-        {route && direction && (
-          <StopsSelect
-            initialPlaceCode={stop?.place_code}
-            route={route}
-            direction={direction}
-            onChange={setState}
-          />
-        )}
-      </Suspense>
-      <Suspense fallback={<LoadingDots />}>
-        {route && direction && stop && (
-          <YourNextrip route={route} direction={direction} stop={stop} />
-        )}
-      </Suspense>
+      <div className="headline">
+        <h1>Take the Bus</h1>
+      </div>
+
+      <h2>Real-time Departures</h2>
+      <div className="app-selection">
+        <Suspense fallback={<LoadingDots />}>
+          <RoutesSelect initialRouteId={route?.route_id} onChange={setState} />
+        </Suspense>
+        <Suspense fallback={<LoadingDots />}>
+          {route && (
+            <DirectionsSelect
+              initialDirectionId={direction?.direction_id}
+              route={route}
+              onChange={(e) =>
+                e
+                  ? setState(e)
+                  : setState({ type: "reset", which: "direction" })
+              }
+            />
+          )}
+        </Suspense>
+        <Suspense fallback={<LoadingDots />}>
+          {route && direction && (
+            <StopsSelect
+              initialPlaceCode={stop?.place_code}
+              route={route}
+              direction={direction}
+              onChange={(e) =>
+                e ? setState(e) : setState({ type: "reset", which: "stop" })
+              }
+            />
+          )}
+        </Suspense>
+      </div>
+
+      {route && direction && stop && (
+        <div className="your-nextrip">
+          <Suspense fallback={<LoadingDots />}>
+            {<YourNextrip route={route} direction={direction} stop={stop} />}
+          </Suspense>
+        </div>
+      )}
     </div>
   );
 }

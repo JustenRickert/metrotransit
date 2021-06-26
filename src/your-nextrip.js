@@ -5,6 +5,40 @@ import Leaflet from "leaflet";
 import { yourNextripAtom } from "./state";
 
 import "leaflet/dist/leaflet.css";
+import "./your-nextrip.css";
+
+function Departures({ yourNextrip }) {
+  const [showAll, setShowAll] = useState(false);
+  const renderDepartureTr = (departure) => (
+    <tr key={departure.trip_id}>
+      <td className="t-route">{departure.route_short_name}</td>
+      <td className="t-destination">{departure.description}</td>
+      <td className="t-departs">{departure.departure_text}</td>
+    </tr>
+  );
+  return (
+    <div className="departures">
+      <table>
+        <thead>
+          <tr>
+            <th className="t-route">Route</th>
+            <th className="t-destination">Destination</th>
+            <th className="t-departs">Departs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {yourNextrip.departures.slice(0, 3).map(renderDepartureTr)}
+          {showAll && yourNextrip.departures.slice(3).map(renderDepartureTr)}
+        </tbody>
+      </table>
+      {yourNextrip.departures.length > 3 && (
+        <button onClick={() => setShowAll((t) => !t)}>
+          {showAll ? "-" : "+"} departures
+        </button>
+      )}
+    </div>
+  );
+}
 
 function setLeafletMapMarker(
   map,
@@ -94,14 +128,8 @@ export function YourNextrip({ route, direction, stop }) {
 
   return (
     <>
-      <h3>{route.route_label}</h3>
-      <ul>
-        {yourNextrip.departures.map((departure) => (
-          <li key={departure.departure_time}>
-            {departure.description} {departure.departure_text}
-          </li>
-        ))}
-      </ul>
+      <h2>{route.route_label}</h2>
+      <Departures yourNextrip={yourNextrip} />
       <div style={{ height: 400, width: 600 }} id="map" />
     </>
   );

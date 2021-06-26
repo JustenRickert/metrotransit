@@ -31,8 +31,8 @@ describe("app", () => {
       </Root>,
       div
     );
-    expect(div.querySelector(".app")).toBeTruthy();
-    expect(div.querySelector(".app").innerHTML).toBe("RoutesSelect");
+    expect(div.querySelector(".app-selection")).toBeTruthy();
+    expect(div.querySelector(".app-selection").innerHTML).toBe("RoutesSelect");
   });
 
   it("renders routes & directions selects initially with inital route state", () => {
@@ -43,7 +43,7 @@ describe("app", () => {
       </Root>,
       div
     );
-    expect(div.querySelector(".app").innerHTML).toBe(
+    expect(div.querySelector(".app-selection").innerHTML).toBe(
       "RoutesSelectDirectionsSelect"
     );
   });
@@ -61,7 +61,7 @@ describe("app", () => {
       </Root>,
       div
     );
-    expect(div.querySelector(".app").innerHTML).toBe(
+    expect(div.querySelector(".app-selection").innerHTML).toBe(
       "RoutesSelectDirectionsSelectStopsSelect"
     );
   });
@@ -80,8 +80,6 @@ describe("app", () => {
       </Root>,
       div
     );
-    expect(div.querySelector(".app").innerHTML).toBe(
-      "RoutesSelectDirectionsSelectStopsSelectYourNextrip"
-    );
+    expect(div.querySelector(".your-nextrip").innerHTML).toBe("YourNextrip");
   });
 });
