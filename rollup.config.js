@@ -39,6 +39,10 @@ export default {
     copy({
       targets: [
         {
+          src: "images",
+          dest: "dist",
+        },
+        {
           src: "index.html",
           dest: "dist",
         },

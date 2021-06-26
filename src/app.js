@@ -88,6 +88,36 @@ function reducer(state, dataOrAction) {
   return fn(dataOrAction);
 }
 
+function BusIcon() {
+  const [wiggle, setWiggle] = useState();
+  useEffect(() => {
+    setTimeout(() => {
+      setWiggle(true);
+    }, 250);
+  }, []);
+  return (
+    <div
+      style={{
+        transform: "translate(-3px, 4px)",
+      }}
+    >
+      <img
+        style={{ position: "absolute", opacity: 0 }}
+        className={wiggle && "wiggle-lines"}
+        width={50}
+        height={50}
+        src="/images/bus-wiggles.png"
+      />
+      <img
+        className={wiggle && "wiggle"}
+        width={50}
+        height={50}
+        src="/images/bus.png"
+      />
+    </div>
+  );
+}
+
 export function App({ initialState = null }) {
   const [{ route, direction, stop }, setState] = useReducer(
     reducer,
@@ -103,7 +133,10 @@ export function App({ initialState = null }) {
   return (
     <div className="app">
       <div className="headline">
-        <h1>Take the Bus</h1>
+        <h1>
+          <BusIcon />
+          Take the Bus
+        </h1>
       </div>
 
       <h2>Real-time Departures</h2>

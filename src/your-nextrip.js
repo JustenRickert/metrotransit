@@ -33,7 +33,7 @@ function Departures({ yourNextrip }) {
       </table>
       {yourNextrip.departures.length > 3 && (
         <button onClick={() => setShowAll((t) => !t)}>
-          {showAll ? "-" : "+"} departures
+          {showAll ? "Hide" : "Show more"} departures
         </button>
       )}
     </div>
