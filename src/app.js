@@ -106,13 +106,13 @@ function BusIcon() {
         className={wiggle && "wiggle-lines"}
         width={50}
         height={50}
-        src="/images/bus-wiggles.png"
+        src="/metrotransit/images/bus-wiggles.png"
       />
       <img
         className={wiggle && "wiggle"}
         width={50}
         height={50}
-        src="/images/bus.png"
+        src="/metrotransit/images/bus.png"
       />
     </div>
   );
