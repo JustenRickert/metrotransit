@@ -62,6 +62,8 @@ function reducer(state, dataOrAction) {
   if (isAction(dataOrAction)) {
     switch (dataOrAction.type) {
       case "reset":
+        return dataOrAction.state;
+      case "reset-one":
         switch (dataOrAction.which) {
           case "direction":
             return {
@@ -128,6 +130,11 @@ export function App({ initialState = null }) {
     route,
     direction,
     stop,
+    onPopState: (eventState) =>
+      setState({
+        type: "reset",
+        state: eventState || initialState || defaultState,
+      }),
   });
 
   return (
@@ -142,7 +149,7 @@ export function App({ initialState = null }) {
       <h2>Real-time Departures</h2>
       <div className="app-selection">
         <Suspense fallback={<LoadingDots />}>
-          <RoutesSelect initialRouteId={route?.route_id} onChange={setState} />
+          <RoutesSelect routeId={route?.route_id} onChange={setState} />
         </Suspense>
         <Suspense fallback={<LoadingDots />}>
           {route && (
@@ -152,7 +159,7 @@ export function App({ initialState = null }) {
               onChange={(e) =>
                 e
                   ? setState(e)
-                  : setState({ type: "reset", which: "direction" })
+                  : setState({ type: "reset-one", which: "direction" })
               }
             />
           )}
@@ -164,7 +171,7 @@ export function App({ initialState = null }) {
               route={route}
               direction={direction}
               onChange={(e) =>
-                e ? setState(e) : setState({ type: "reset", which: "stop" })
+                e ? setState(e) : setState({ type: "reset-one", which: "stop" })
               }
             />
           )}

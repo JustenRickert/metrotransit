@@ -3,16 +3,10 @@ import { useRecoilState } from "recoil";
 
 import { directionsAtom, stopsAtom, routesAtom } from "./state";
 
-export const RoutesSelect = function RouteSelect({
-  initialRouteId = "",
-  onChange,
-}) {
+export const RoutesSelect = function RouteSelect({ routeId = "", onChange }) {
   const [{ ids, routes }] = useRecoilState(routesAtom);
   return (
-    <select
-      value={initialRouteId}
-      onChange={(e) => onChange(routes[e.target.value])}
-    >
+    <select value={routeId} onChange={(e) => onChange(routes[e.target.value])}>
       <option key="" value="">
         Select a route
       </option>
@@ -29,7 +23,7 @@ export function DirectionsSelect({ initialDirectionId = "", route, onChange }) {
   const ref = useRef();
   const [{ ids, directions }] = useRecoilState(directionsAtom(route.route_id));
   useEffect(() => {
-    ref.current.value = "";
+    ref.current.value = initialDirectionId;
   }, [route]);
   return (
     <select
@@ -60,7 +54,7 @@ export function StopsSelect({
     stopsAtom([route.route_id, direction.direction_id].join("."))
   );
   useEffect(() => {
-    ref.current.value = "";
+    ref.current.value = initialPlaceCode;
   }, [route, direction]);
   return (
     <select
