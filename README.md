@@ -4,6 +4,8 @@ This is an imitation of the metrotransit nextrip app. It is very cool.
 
 # Instructions
 
+(Requires Node 14)
+
 Run the development server
 ```
 npm run start # then open your browser to http://localhost:3000
