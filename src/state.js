@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { selector, selectorFamily } from "recoil";
 
 const transitUrl = new URL(
@@ -82,23 +82,27 @@ export const stopsAtom = selectorFamily({
   },
 });
 
-// TODO
 export const yourNextripAtom = selectorFamily({
   key: "yournextrip",
   get: (routeIdDotDirectionIdDotStopId) => () => {
-    const [routeId, directionId, stopId] = routeIdDotDirectionIdDotStopId.split(
-      "."
-    );
+    const [routeId, directionId, stopId] =
+      routeIdDotDirectionIdDotStopId.split(".");
     return fetch(
       transitUrl + `nextripv2/${routeId}/${directionId}/${stopId}`
     ).then((r) => r.json());
   },
 });
 
-export function useRouter({ route, direction, stop }) {
+export function useRouter({ route, direction, stop, onPopState }) {
+  const poppingState = useRef(false);
+
   useEffect(() => {
     if (!route || !direction || !stop) return;
-    window.history.replaceState(
+    if (poppingState.current) {
+      poppingState.current = false;
+      return;
+    }
+    window.history.pushState(
       {
         route,
         direction,
@@ -107,5 +111,17 @@ export function useRouter({ route, direction, stop }) {
       "",
       `/${route.route_id}/${direction.direction_id}/${stop.place_code}`
     );
+  }, [route, direction, stop]);
+
+  useEffect(() => {
+    if (!route || !direction || !stop) return;
+    const handle = (e) => {
+      poppingState.current = true;
+      onPopState(e.state);
+    };
+    window.addEventListener("popstate", handle);
+    return () => {
+      window.removeEventListener("popstate", handle);
+    };
   }, [route, direction, stop]);
 }
