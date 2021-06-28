@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ROLLUP_WATCH=true node dev.js",
-    "build": "rm -rf dist && node build.js",
+    "build": "rm -rf dist docs && mkdir docs && node build.js && mv dist/* docs && cp docs/index.html docs/404.html",
     "test": "npx jest"
   },
   "author": "",
