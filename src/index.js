@@ -10,7 +10,7 @@ function Root({ children }) {
 
 const url = new URL(window.location);
 
-const pathResult = /(\d+)\/(\d+)\/([\d\w]+)/.exec(url.pathname);
+const pathResult = /metrotransit\/(\d+)\/(\d+)\/([\d\w]+)/.exec(url.pathname);
 
 if (!pathResult) {
   render(

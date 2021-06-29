@@ -109,7 +109,7 @@ export function useRouter({ route, direction, stop, onPopState }) {
         stop,
       },
       "",
-      `/${route.route_id}/${direction.direction_id}/${stop.place_code}`
+      `/metrotransit/${route.route_id}/${direction.direction_id}/${stop.place_code}`
     );
   }, [route, direction, stop]);
 
